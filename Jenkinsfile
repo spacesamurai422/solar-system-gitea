@@ -4,9 +4,9 @@ pipeline {
         nodejs 'node-2260'
     }
     stages {
-        stage('Build') {
+        stage('Installing Dependencies') {
             steps {
-                sh 'echo "Running build now"'
+                sh 'npm install --no-audit'
             }
         }
 
