@@ -1,7 +1,7 @@
 pipeline {
     agent any
-    environment {
-        PATH = "/opt/homebrew/bin:$PATH"
+    tools {
+        nodejs 'node-2260'
     }
     stages {
         stage('Build') {
