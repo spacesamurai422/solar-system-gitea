@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        PATH = "/opt/homebrew/bin:$PATH"
+    }
     stages {
         stage('Build') {
             steps {
@@ -10,8 +13,8 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'echo "Running test now"'
-                sh '/opt/homebrew/bin/node -v'
-                sh '/opt/homebrew/bin/npm -v'
+                sh 'node -v'
+                sh 'npm -v'
             }
         }
     }
