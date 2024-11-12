@@ -9,12 +9,12 @@ pipeline {
                 sh 'npm install --no-audit'
             }
         }
-
-        stage('Test') {
+        stage('NPM Dependency Audit') {
             steps {
-                sh 'echo "Running test now"'
-                sh 'node -v'
-                sh 'npm -v'
+                sh '''
+                    npm audit --audit-level=critical
+                    echo $?
+                '''
             }
         }
     }
