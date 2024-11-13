@@ -11,10 +11,11 @@ pipeline {
         }
         stage('NPM Dependency Audit') {
             steps {
-                sh '''
-                    npm audit --audit-level=critical
-                    echo $?
-                '''
+                dependencyCheck additionalArguments: '''
+                --scan \'./\'
+                --out \'./\'
+                --format \'ALL\'
+                --prettyPrint''', odcInstallation: 'owasp-check-10'
             }
         }
     }
