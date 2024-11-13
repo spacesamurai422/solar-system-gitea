@@ -3,6 +3,9 @@ pipeline {
     tools {
         nodejs 'node-2260'
     }
+    environment {
+        MONGO_URI = 'mongodb://localhost:27017/planets'
+    }
     stages {
         stage('Installing Dependencies') {
             steps {
@@ -32,7 +35,6 @@ pipeline {
                         junit allowEmptyResults: true, stdioRetention: '', testResults: 'dependency-check-junit.xml'
 
                         publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: './', reportFiles: 'dependency-check-jenkins.html', reportName: 'Dependency check', reportTitles: '', useWrapperFileDirectly: true])
-                        
                     }
                 }
             }
@@ -40,7 +42,9 @@ pipeline {
 
         stage('Unit Testing') {
             steps {
-                sh 'npm test'
+                withCredentials([usernamePassword(credentialsId: 'mongodb', passwordVariable: 'MONGO_PASSWORD', usernameVariable: 'MONGO_USERNAME')]) {
+                    sh 'npm test'
+                }
             }
         }
     }
