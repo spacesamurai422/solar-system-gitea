@@ -27,6 +27,7 @@ pipeline {
                     --out \'./\'
                     --format \'ALL\'
                     --prettyPrint''', odcInstallation: 'owasp-check-10'
+                        publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: './', reportFiles: 'dependency-check-jenkins.html', reportName: 'Dependency check', reportTitles: '', useWrapperFileDirectly: true])
                     }
                 }
             }
