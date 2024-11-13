@@ -3,6 +3,9 @@ pipeline {
     tools {
         nodejs 'node-2260'
     }
+    options {
+        timestamps()
+    }
     environment {
         MONGO_URI = 'mongodb://localhost:27017/planets'
     }
@@ -47,6 +50,14 @@ pipeline {
                 }
 
                 junit allowEmptyResults: true, keepProperties: true, skipMarkingBuildUnstable: true, stdioRetention: '', testResults: 'test-results.xml'
+            }
+        }
+
+        stage('Code Coverage') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'mongodb', passwordVariable: 'MONGO_PASSWORD', usernameVariable: 'MONGO_USERNAME')]) {
+                    sh 'npm run coverage'
+                }
             }
         }
     }
